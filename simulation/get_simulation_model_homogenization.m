@@ -1,13 +1,31 @@
 function model = get_simulation_model_homogenization(wire, domain, mesh, f_vec)
+% Create the COMSOL FEM model for circular coil with a litz wire with homogenized parameters.
+%
+%    Using 2D rotation symmetric FEM simulation with COMSOL.
+%    Define variables for the losses, energy, and induced voltage.
+%
+%    Parameters:
+%        wire (struct): struct with the litz wire parameters
+%        domain (struct): struct with the simulation domain and coil geometry
+%        mesh (struct): struct with mesh size parameters
+%        f_vec (vector): frequency vector
+%
+%    Returns:
+%        model (model): COMSOL model
+%
+%    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
+% add to path
 import('com.comsol.model.*')
 import('com.comsol.model.util.*')
 
+% create model
 model = ModelUtil.create('model');
 model.param('default').label('default');
 model.component.create('comp', true);
 model.component('comp').label('comp');
 
+% construct the model
 get_param(model, wire, domain, mesh);
 get_geom(model);
 get_sel(model)
@@ -20,18 +38,24 @@ get_sol(model, f_vec)
 end
 
 function get_param(model, wire, domain, mesh)
+% Add the parameters.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        wire (struct): struct with the litz wire parameters
+%        domain (struct): struct with the simulation domain and coil geometry
+%        mesh (struct): struct with mesh size parameters
 
 n = wire.n;
 d_wire = wire.d_wire;
+d_litz = wire.d_litz;
 r_dom = domain.r_dom;
 r_coil = domain.r_coil;
-d_litz = wire.d_litz;
 h_air_max = mesh.h_air_max;
 h_air_min = mesh.h_air_min;
 h_wire_max = mesh.h_wire_max;
 h_wire_min = mesh.h_wire_min;
 
-%% set param
 model.param.set('r_dom', r_dom);
 model.param.set('r_coil', r_coil);
 model.param.set('d_litz', d_litz);
@@ -54,9 +78,16 @@ get_interp(model, 'mu_i_fct', f_vec, imag(mu_vec))
 
 end
 
-function get_interp(model, tag, x, y)
+function get_interp(model, tag, x_vec, y_vec)
+% Add an interpolation function.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        tag (str): tag of the interpolation
+%        x_vec (vector): x data
+%        y_vec (vector): y data
 
-data = arrayfun(@num2str, [x ; y], 'UniformOutput', 0).';
+data = arrayfun(@num2str, [x_vec ; y_vec], 'UniformOutput', 0).';
 
 model.func.create(tag, 'Interpolation');
 model.func(tag).label(tag);
@@ -67,6 +98,10 @@ model.func(tag).set('table', data);
 end
 
 function get_geom(model)
+% Add the geometry.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').geom.create('geom', 2);
 model.component('comp').geom('geom').label('geom');
@@ -92,6 +127,10 @@ model.component('comp').geom('geom').run;
 end
 
 function get_sel(model)
+% Add the selections.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').selection.create('wire', 'Union');
 model.component('comp').selection('wire').label('wire');
@@ -109,6 +148,10 @@ model.component('comp').selection('all').set('input', {'wire', 'air'});
 end
 
 function get_var_op(model)
+% Add the variables and operators.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').variable.create('var_wire');
 model.component('comp').variable('var_wire').label('var_wire');
@@ -149,6 +192,10 @@ model.component('comp').cpl('int_wire').selection.named('wire');
 end
 
 function get_mat(model)
+% Add the materials.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').material.create('wire', 'Common');
 model.component('comp').material('wire').selection.named('wire');
@@ -166,6 +213,10 @@ model.component('comp').material('air').propertyGroup('def').set('relpermittivit
 end
 
 function get_mf(model)
+% Add the magnetic field data.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').physics.create('mf', 'InductionCurrents', 'geom');
 model.component('comp').physics('mf').identifier('mf');
@@ -187,6 +238,10 @@ model.component('comp').physics('mf').feature('wire').set('ICoil', 'I_wire_peak'
 end
 
 function get_mesh(model)
+% Add the mesh.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').mesh.create('mesh');
 model.component('comp').mesh('mesh').label('mesh');
@@ -219,6 +274,11 @@ model.component('comp').mesh('mesh').run;
 end
 
 function get_sol(model, f_vec)
+% Add the solution.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        f_vec (vector): frequency vector
 
 model.study.create('std');
 model.study('std').label('study');
@@ -249,6 +309,12 @@ get_plot(model, 'w_dom', 'w_dom')
 end
 
 function get_plot(model, tag, expr)
+% Add a 2D surface plot.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        tag (str): tag of the plot
+%        expr (str): expression to be plotted
 
 model.result.create(tag, 'PlotGroup2D');
 model.result(tag).label(tag);

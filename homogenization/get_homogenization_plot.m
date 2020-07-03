@@ -11,7 +11,7 @@ function get_homogenization_plot(wire)
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 % plot init
-figure()
+figure('name', 'homogenization')
 
 % plot conductivity
 subplot(1,2,1)

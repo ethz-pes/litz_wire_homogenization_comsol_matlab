@@ -1,12 +1,24 @@
 function [data, model] = get_simulation(type, wire, domain, mesh, f_vec)
-% Extract the losses with a strand-level model
-%     - name: name of the wire
-%     - type: type of the simulation ('single_wire' or 'parallel_wire')
-%     - wire: struct with the wire parameters
-%     - domain: struct with the domain parameters
-%     - mesh: struct with the mesh size
-%     - f_vec: frequency vector
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Simulate with FEM a circulate litz wire coil (with and without homogenization).
+%
+%    Simulate the energy, the losses, and the induced voltage of a circulate litz wire coil.
+%
+%    Two different methods are used:
+%        - simulation with the homogenized material parameters (fast)
+%        - simulation of all the discrete strands (slow)
+%
+%    Parameters:
+%        type (str): type of the simulation ('discrete_strand' or 'homogenization')
+%        wire (struct): struct with the litz wire parameters
+%        domain (struct): struct with the simulation domain and coil geometry
+%        mesh (struct): struct with mesh size parameters
+%        f_vec (vector): frequency vector
+%
+%    Returns:
+%        data (struct): struct with the extracted parameters
+%        model (model): COMSOL model
+%
+%    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 % init
 disp(['simulation / ' type])

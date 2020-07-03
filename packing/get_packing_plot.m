@@ -11,7 +11,7 @@ function get_packing_plot(wire)
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 % plot init
-figure()
+figure('name', 'packing')
 
 % angle vector
 phi_vec = linspace(0, 2*pi);
@@ -25,7 +25,6 @@ x_litz = (wire.d_litz./2).*cos(phi_vec);
 y_litz = (wire.d_litz./2).*sin(phi_vec);
 
 % plot the geometry
-figure()
 subplot(1,1,1)
 plot(1e3.*x_wire, 1e3.*y_wire, 'b')
 hold('on');
