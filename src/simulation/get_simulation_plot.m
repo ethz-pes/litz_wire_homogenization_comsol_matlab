@@ -43,7 +43,7 @@ subplot(2,2,3)
 get_subplot_err(f_vec, real(homogenization.V_coil_vec), real(discrete_strand.V_coil_vec), 'voltage / real')
 subplot(2,2,4)
 get_subplot_err(f_vec, imag(homogenization.V_coil_vec), imag(discrete_strand.V_coil_vec), 'voltage / imag')
-sgtitle('FEM Variables')
+sgtitle('FEM Errors')
 
 end
 
@@ -57,9 +57,9 @@ function get_subplot_var(f_vec, v_homogenization, v_discrete_strand, str_label, 
 %        str_label (str): label of the variable 
 %        str_title (str): title of the plot 
 
-loglog(f_vec, v_homogenization, 'r')
+loglog(f_vec, v_homogenization, '-r')
 hold('on')
-loglog(f_vec, v_discrete_strand, 'g')
+loglog(f_vec, v_discrete_strand, '--g')
 legend({'homogenization', 'discrete strand'}, 'interpreter', 'none')
 xlabel('f [kHz]')
 ylabel(str_label)
@@ -78,6 +78,7 @@ function get_subplot_err(f_vec, v_homogenization, v_discrete_strand, str_title)
 
 err = abs((v_homogenization-v_discrete_strand)./v_discrete_strand);
 semilogx(f_vec, 100.*err, 'r')
+legend({'error'}, 'interpreter', 'none')
 xlabel('f [kHz]')
 ylabel('error [%]')
 title(str_title)

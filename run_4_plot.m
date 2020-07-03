@@ -9,9 +9,7 @@ function run_4_plot()
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 close('all')
-addpath('homogenization')
-addpath('packing')
-addpath('simulation')
+addpath(genpath('src'))
 
 %% plot the litz wire homogenized parameters
 wire = load('data/homogenization.mat');

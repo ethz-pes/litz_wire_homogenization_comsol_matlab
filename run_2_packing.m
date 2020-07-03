@@ -7,7 +7,7 @@ function run_2_packing()
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 close('all')
-addpath('packing')
+addpath(genpath('src'))
 
 %% parameters
 

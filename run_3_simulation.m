@@ -10,7 +10,7 @@ function run_3_simulation()
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 close('all')
-addpath('simulation')
+addpath(genpath('src'))
 
 %% parameters
 

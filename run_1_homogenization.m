@@ -14,7 +14,7 @@ function run_1_homogenization()
 %    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 close('all')
-addpath('homogenization')
+addpath(genpath('src'))
 
 %% parameters
 
