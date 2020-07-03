@@ -1,8 +1,17 @@
 function wire = get_packing(wire, d_wire_target)
-% Construct the geometry of the wire
-%     - name: name of the wire
-%     - wire: struct with the wire parameters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Compute the geometry of a round litz wire.
+%
+%    Get the position of the strands for a round litz wire.
+%    Get a solid wire with an equivalent diameter.
+%
+%    Parameters:
+%        wire (struct): struct with the litz wire parameters
+%        d_wire_target (float): target for the litz wire diameter
+%
+%    Returns:
+%        wire (struct): struct with the litz wire parameters
+%
+%    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 % init
 disp('packing')
