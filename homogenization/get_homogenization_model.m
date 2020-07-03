@@ -1,26 +1,51 @@
 function model = get_homogenization_model(wire, mesh, f_vec)
+% Create the COMSOL FEM model for homogenized litz wire material parameters.
+%
+%    Using 2D FEM simulation with COMSOL.
+%
+%    Two different magnetic simulations are done:
+%        - for skin effect
+%        - for proximity effect
+%
+%    Parameters:
+%        wire (struct): struct with the litz wire parameters
+%        mesh (struct): struct with mesh size parameters
+%        f_vec (vector): frequency vector
+%
+%    Returns:
+%        model (model): COMSOL model
+%
+%    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
+% add to path
 import('com.comsol.model.*')
 import('com.comsol.model.util.*')
 
+% create model
 model = ModelUtil.create('model');
 model.param('default').label('default');
 model.component.create('comp', true);
 model.component('comp').label('comp');
 
+% construct the model
 get_param(model, wire, mesh)
 get_geom(model)
 get_sel(model)
-get_var(model)
+get_var_op(model)
 get_mat(model)
 get_mf(model)
 get_mesh(model)
 get_sol(model, f_vec)
 
-
 end
 
 function get_param(model, wire, mesh)
+% Add the parameters.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        wire (struct): struct with the litz wire parameters
+%        mesh (struct): struct with mesh size parameters
 
 d_litz = wire.d_litz;
 fill = wire.fill;
@@ -46,6 +71,10 @@ model.param.set('I_skin', 1.0);
 end
 
 function get_geom(model)
+% Add the geometry.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').geom.create('geom', 2);
 model.component('comp').geom('geom').label('geom');
@@ -75,6 +104,10 @@ model.component('comp').geom('geom').run;
 end
 
 function get_sel(model)
+% Add the selections.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').selection.create('wire', 'Explicit');
 model.component('comp').selection('wire').label('wire');
@@ -118,7 +151,11 @@ model.component('comp').selection('bc_right').set([7 8]);
 
 end
 
-function get_var(model)
+function get_var_op(model)
+% Add the variables and operators.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').variable.create('var_skin');
 model.component('comp').variable('var_skin').label('var_skin');
@@ -159,6 +196,10 @@ model.component('comp').cpl('int_wire_2').selection.named('wire_2');
 end
 
 function get_mat(model)
+% Add the materials.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').material.create('wire', 'Common');
 model.component('comp').material('wire').selection.named('wire');
@@ -177,6 +218,10 @@ model.component('comp').material('air').propertyGroup('def').set('relpermittivit
 end
 
 function get_mf(model)
+% Add the magnetic field data.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').physics.create('mf_skin', 'InductionCurrents', 'geom');
 model.component('comp').physics('mf_skin').identifier('mf_skin');
@@ -237,6 +282,10 @@ model.component('comp').physics('mf_prox').feature('wire_2').set('Je', {'0'; '0'
 end
 
 function get_mesh(model)
+% Add the mesh.
+%
+%    Parameters:
+%        model (model): COMSOL model
 
 model.component('comp').mesh.create('mesh');
 model.component('comp').mesh('mesh').label('mesh');
@@ -257,6 +306,11 @@ model.component('comp').mesh('mesh').run;
 end
 
 function get_sol(model, f_vec)
+% Add the solution.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        f_vec (vector): frequency vector
 
 model.study.create('std');
 model.study('std').label('study');
@@ -292,6 +346,12 @@ get_plot(model, 'prox_J', 'mf_prox.normJ');
 end
 
 function get_plot(model, tag, expr)
+% Add a 2D surface plot.
+%
+%    Parameters:
+%        model (model): COMSOL model
+%        tag (str): tag of the plot
+%        expr (str): expression to be plotted
 
 model.result.create(tag, 'PlotGroup2D');
 model.result(tag).label(tag);

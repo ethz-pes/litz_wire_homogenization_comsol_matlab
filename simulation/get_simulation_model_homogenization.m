@@ -11,7 +11,7 @@ model.component('comp').label('comp');
 get_param(model, wire, domain, mesh);
 get_geom(model);
 get_sel(model)
-get_var(model)
+get_var_op(model)
 get_mat(model)
 get_mf(model)
 get_mesh(model)
@@ -108,7 +108,7 @@ model.component('comp').selection('all').set('input', {'wire', 'air'});
 
 end
 
-function get_var(model)
+function get_var_op(model)
 
 model.component('comp').variable.create('var_wire');
 model.component('comp').variable('var_wire').label('var_wire');

@@ -1,11 +1,26 @@
 function [wire, model] = get_homogenization(wire, mesh, f_vec)
-% Extract the virtual homogenized parameters of the wire
-%     - name: name of the wire
-%     - wire: struct with the wire parameters
-%     - mesh: struct with the mesh size
-%     - f_vec: frequency vector
-%     - homogenization: struct with the homogenized parameters of the wire
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Compute the homogenized material parameters for a litz wire (with FEM).
+%
+%    Using 2D FEM simulation with COMSOL.
+%
+%    Extract the losses and energy:
+%        - for skin effect
+%        - for proximity effect
+%
+%    Extract equivalent homogenized material parameters:
+%        - complex permeability
+%        - complex conductivity
+%
+%    Parameters:
+%        wire (struct): struct with the litz wire parameters
+%        mesh (struct): struct with mesh size parameters
+%        f_vec (vector): frequency vector
+%
+%    Returns:
+%        wire (struct): struct with the litz wire parameters
+%        model (model): COMSOL model
+%
+%    (c) 2016-2020, ETH Zurich, Power Electronic Systems Laboratory, T. Guillod
 
 % init
 disp('homogenization')
