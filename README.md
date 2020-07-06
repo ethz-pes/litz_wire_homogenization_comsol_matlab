@@ -17,7 +17,7 @@ The following limitations exist:
 * The litz wire is ideal (insulated and perfectly twisted strands)
 * The litz wire is defined with a fill factor, the exact position of the strands is not considered
 
-## Examples
+## Example
 
 A simple circular air coil realized with litz wire is considered:
 * [run_1_homogenization.m](run_1_homogenization.m) - Extract the winding geometry, energy and field patterns from FEM
