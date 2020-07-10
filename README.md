@@ -82,7 +82,7 @@ The tool is tested with the following COMSOL setup:
 
 References for the litz wire losses:
 * Guillod, T. / Litz Wire Losses: Effects of Twisting Imperfections / COMPEL / 2017
-* Meeker, D. / An Improved Continuum Skin and Proximity Effect Model for Hexagonally Packed Wires / JCAM / 2012
+* Meeker, D. / An Improved Continuum Skin and Proximity Effect Model for Hexagonally Packed Wires / Elsevier JCAM / 2012
 * Xi, N. / An Equivalent Complex Permeability Model for Litz-Wire Windings / TIE / 2009
 
 ## Author
