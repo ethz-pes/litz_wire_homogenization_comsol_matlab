@@ -1,9 +1,9 @@
 # Litz Wire Homogenization with COMSOL and MATLAB
 
-This **COMSOL and MATLAB** tool extracts **homogenized material parameters for a litz wire**
-This means that a complex litz wire, which is composed of many strands, can be replaced with a homogeneous material
-This **virtual material parameters** are defined such that the energy and losses matches the stranded litz wire
-More concretely, a virtual **complex permeability** and **complex conductivity** are extracted
+This **COMSOL and MATLAB** tool extracts **homogenized material parameters for a litz wire**.
+This means that a complex litz wire, which is composed of many strands, can be replaced with a homogeneous material.
+This **virtual material parameters** are defined such that the energy and losses matches the stranded litz wire.
+More concretely, a virtual **complex permeability** and **complex conductivity** are extracted.
 
 The method features several advantages:
 * A **reduced computational cost**, since the discrete strands are not modeled
