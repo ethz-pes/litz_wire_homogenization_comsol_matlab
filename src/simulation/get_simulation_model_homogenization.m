@@ -174,7 +174,7 @@ model.component('comp').variable('var_air').set('H_norm', 'mf.normH');
 model.component('comp').variable.create('var_all');
 model.component('comp').variable('var_all').label('var_all');
 model.component('comp').variable('var_all').set('p_dom', 'real(sigma_c)*E_norm^2-2*pi*freq*mu0_const*imag(mu_c)*H_norm^2');
-model.component('comp').variable('var_all').set('w_dom', '0.5*(mu0_const*real(mu_c)*H_norm^2+imag(sigma_c)/(2*pi*freq)*E_norm^2)');
+model.component('comp').variable('var_all').set('w_dom', '0.5*(mu0_const*real(mu_c)*H_norm^2-imag(sigma_c)/(2*pi*freq)*E_norm^2)');
 model.component('comp').variable('var_all').set('P_dom', 'int_all(p_dom)');
 model.component('comp').variable('var_all').set('W_dom', 'int_all(w_dom)');
 model.component('comp').variable('var_all').set('V_coil', 'mf.VCoil_wire');
