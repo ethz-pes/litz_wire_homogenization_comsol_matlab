@@ -26,22 +26,16 @@ B_prox_tot_vec = fem.B_prox_tot_vec;
 % angular frequency
 w_vec = 2.*pi.*f_vec;
 
-% skin effect simulation (match energy and losses)
-%     - sigma = sigma_r+1i*sigma_i
-%     - J = sigma*E
-%     - P = sigma_r*(J^2)/(sigma_r^2+sigma_i^2)
-%     - W = 0.5*(sigma_i/w)*(J^2)/(sigma_r^2+sigma_i^2)
-sigma_r_vec = (J_skin_tot_vec.^2.*p_skin_vec)./(p_skin_vec.^2+4.*w_vec.^2.*w_skin_vec.^2);
-sigma_i_vec = (2.*J_skin_tot_vec.^2.*w_vec.*w_skin_vec)./(p_skin_vec.^2+4.*w_vec.^2.*w_skin_vec.^2);
-sigma_vec = sigma_r_vec+1i.*sigma_i_vec;
+% compute the apparent power
+power_skin_vec = p_skin_vec+1i.*w_vec.*(2.*w_skin_vec);
+power_prox_vec = p_prox_vec+1i.*w_vec.*(2.*w_prox_vec);
 
-% proximity effect simulation  (match energy and losses)
-%     - mu = mu_r+1i*mu_i
-%     - B = mu*H
-%     - P = -(mu_i*w)*(B^2)/(mu_r^2+mu_i^2)
-%     - W = 0.5*mu_r*(B^2)/(mu_r^2+mu_i^2)
-mu_r_vec = (2.*B_prox_tot_vec.^2.*w_vec.^2.*w_prox_vec)./(p_prox_vec.^2+4.*w_vec.^2.*w_prox_vec.^2);
-mu_i_vec = -(B_prox_tot_vec.^2.*p_prox_vec.*w_vec)./(p_prox_vec.^2+4.*w_vec.^2.*w_prox_vec.^2);
-mu_vec = (mu_r_vec+1i.*mu_i_vec)./(4.*pi.*1e-7);
+% skin effect simulation (match energy and losses)
+rho_vec = power_skin_vec./(J_skin_tot_vec.^2);
+sigma_vec = 1./rho_vec;
+
+% proximity effect simulation (match energy and losses)
+kappa_vec = conj(power_prox_vec)./(w_vec.^2.*B_prox_tot_vec.^2);
+mu_vec = 1./(4.*pi.*1e-7.*1i.*w_vec.*kappa_vec);
 
 end

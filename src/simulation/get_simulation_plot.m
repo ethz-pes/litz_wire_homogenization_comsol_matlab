@@ -57,10 +57,10 @@ function get_subplot_var(f_vec, v_homogenization, v_discrete_strand, str_label, 
 %        str_label (str): label of the variable 
 %        str_title (str): title of the plot 
 
-loglog(f_vec, v_homogenization, '-r')
+loglog(f_vec, v_homogenization, '-r', 'LineWidth', 1.0)
 hold('on')
-loglog(f_vec, v_discrete_strand, '--g')
-legend({'homogenization', 'discrete strand'}, 'interpreter', 'none')
+loglog(f_vec, v_discrete_strand, '--g', 'LineWidth', 1.0)
+legend({'homogenization', 'discrete strand'})
 xlabel('f [kHz]')
 ylabel(str_label)
 title(str_title)
@@ -77,8 +77,8 @@ function get_subplot_err(f_vec, v_homogenization, v_discrete_strand, str_title)
 %        str_title (str): title of the plot 
 
 err = abs((v_homogenization-v_discrete_strand)./v_discrete_strand);
-semilogx(f_vec, 100.*err, 'r')
-legend({'error'}, 'interpreter', 'none')
+semilogx(f_vec, 100.*err, 'r', 'LineWidth', 1.0)
+legend({'error'})
 xlabel('f [kHz]')
 ylabel('error [%]')
 title(str_title)
