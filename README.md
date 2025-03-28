@@ -22,8 +22,6 @@ The following limitations exist:
 * The litz wire is ideal (insulated and perfectly twisted strands)
 * The litz wire is defined with a fill factor, the exact position of the strands is not considered
 
-This tool is developed by the **Power Electronic Systems Laboratory at ETH Zurich** and is available under the **BSD License**. The code is also available on the ETH Data Archive.
-
 ## Example
 
 A simple circular air coil realized with litz wire is considered:
