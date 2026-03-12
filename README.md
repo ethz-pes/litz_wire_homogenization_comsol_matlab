@@ -5,6 +5,9 @@
 ![category - power electronics](https://img.shields.io/badge/category-power%20electronics-lightgrey)
 ![status - unmaintained](https://img.shields.io/badge/status-unmaintained-red)
 
+**Warning**: COMSOL 6.3 integrates a Litz wire homogenized model rendering this package redundant. 
+If you are using a modern COMSOL version, use the integrated model and discard this package.
+
 This **COMSOL and MATLAB** tool extracts **homogenized material parameters for a litz wire**.
 This means that a complex litz wire, which is composed of many strands, can be replaced with a homogeneous material.
 This **virtual material parameters** are defined such that the energy and losses matches the stranded litz wire.
